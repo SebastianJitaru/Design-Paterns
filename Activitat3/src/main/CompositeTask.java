@@ -5,22 +5,21 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-public abstract class CompositeTask extends Task implements Observer {
+public class CompositeTask extends Task implements Observer {
     List<Task> subTasks;
-
+    Money cost;
     public CompositeTask() {
+        this.cost = new Money(0);
         this.subTasks = new ArrayList<>();
     }
 
-    public CompositeTask(List<Task> subTasks) {
-        this.subTasks = subTasks;
-        for (Task subTask : subTasks) {
-            subTask.addObserver(this);
+    public Money getCostInEuros() {
+        Money cost = new Money(0);
+        for (Task t : subTasks) {
+            cost.add(t.getCost());
         }
-        updateCost();
+        return cost;
     }
-
-
     public void addSubtask(Task subTask) {
         subTasks.add(subTask);
         subTask.addObserver(this);
@@ -36,7 +35,7 @@ public abstract class CompositeTask extends Task implements Observer {
     private void updateCost() {
         int totalCost = 0;
         for (Task subTask : subTasks) {
-            totalCost += subTask.getCost();
+            totalCost += subTask.getCost().getCostInEuros();
         }
         setCost(totalCost);
     }

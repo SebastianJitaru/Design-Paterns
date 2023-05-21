@@ -2,34 +2,30 @@ package main;
 
 import java.util.Observable;
 
-public abstract class Task extends Observable {
-    protected int cost;
+public class Task extends Observable {
+    protected Money cost = new Money(0.0);
 
     public Task (){
 
     }
-    protected Task(int cost) {
-        if (cost < 0) {
+    protected Task(Money cost) {
+        if (cost.getCostInEuros() < 0) {
             throw new IllegalArgumentException("Cost cannot be negative");
         }
         this.cost = cost;
     }
 
-    public int getCost() {
+    public Money getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(double cost) {
         if (cost < 0) {
             throw new IllegalArgumentException("Cost cannot be negative");
         }
-        int oldCost = this.cost;
-        this.cost = cost;
+        double oldCost = this.cost.getCostInEuros();
+        this.cost.setCostInEuros(cost);
         setChanged();
         notifyObservers(new CostChanged(oldCost, cost));
-    }
-
-    public final int costInEuros() {
-        return this.cost;
     }
 }

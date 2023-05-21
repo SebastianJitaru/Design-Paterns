@@ -1,3 +1,3 @@
 package main;
 
-public record CostChanged(int oldCost, int newCost) {}
+public record CostChanged(double oldCost, double newCost) {}

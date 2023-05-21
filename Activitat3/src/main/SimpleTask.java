@@ -1,11 +1,11 @@
 package main;
 
 public class SimpleTask extends Task {
-    public SimpleTask(int cost) {
-        super(cost);
+    public SimpleTask(Money cost) {
+        this.cost = cost;
     }
 
-    public void changeCost(int newCost) {
+    public void changeCost(double newCost) {
         setCost(newCost);
     }
 }
