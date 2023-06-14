@@ -1,24 +1,22 @@
 package Examens.examen22;
 
-import javax.crypto.Mac;
-
 public class Runner {
     public static void main (String[] args){
         Machine maquina1 = new Machine();
         Machine maquina2 = new Machine();
 
+        maquina2.setHours(10);
+        maquina1.setHours(90);
         MachineComposite composite = new MachineComposite();
 
         composite.addComponent(maquina1);
         composite.addComponent(maquina2);
 
-        maquina1.setBroken();
+        HoursCountVisitor visitor = new HoursCountVisitor(30);
 
-        System.out.println("State of composite machine is: " + composite.isCompositeBroken());
+        composite.accept(visitor);
 
-        maquina1.repair();
-
-        System.out.println("State of composite machine is: " + composite.isCompositeBroken());
+        System.out.println("Number of machines surpassing the threshold is "+visitor.getCount());
 
     }
 }
